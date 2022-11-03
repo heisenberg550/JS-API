@@ -73,28 +73,6 @@
     <!--// main content -->
   </body>
   <script>
-    // function getPosts() {
-    //   const req = new XMLHttpRequest();
-    //   req.open("GET", "https://jsonplaceholder.typicode.com/posts");
-    //   req.responseType = "json";
-    //   req.send();
-    //   req.onload = () => {
-    //     if (req.status >= 200 && req.status < 300) {
-    //       let posts = req.response;
-    //       for (post of posts) {
-    //         postContent = `
-    //         <div id="post">
-    //           <h3>${post.title}</h3>
-    //           <h4>${post.body}</h4>
-    //         </div>`;
-    //         document.getElementById("posts").innerHTML += postContent;
-    //       }
-    //     } else {
-    //       console.log("error");
-    //     }
-    //   };
-    // }
-
     function getUsers() {
       const req = new XMLHttpRequest();
       req.open("GET", "https://jsonplaceholder.typicode.com/users");
@@ -141,8 +119,6 @@
       };
       
     }
-    // getPosts();
-
     function userClicked (userId , element) {
       getUserPosts(userId)
       let selected = document.getElementsByClassName("selected");
