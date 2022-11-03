@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: linear-gradient(45deg, rgb(6, 6, 120), rgb(102, 2, 2));
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+      }
+      #user {
+        background-color: white;
+        border-radius: 100px;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+        padding-left: 20px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3s);
+        cursor: pointer;
+      }
+      #user.selected {
+        border: solid #ff6200 6px;
+      }
+      #post {
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3s);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- main Content -->
+    <div id="content" style="display: flex">
+      <!-- Users Container -->
+      <div style="width: 30%">
+        <!-- User Container -->
+        <div id="users" style="width: 90%; margin: 0 auto">
+          <!-- User Content -->
+          <!-- <div id="user">
+            <h3>Rayan</h3>
+            <h3>Rayan@ww.cp</h3>
+          </div> -->
+          <!--// User Content -->
+        </div>
+        <!-- Users Container -->
+      </div>
+      <!--// User Container -->
+
+      <!-- Posts Container -->
+      <div id="posts-container" style="width: 70%">
+        <!-- Posts -->
+        <div id="posts" style="width: 90%; margin: 0 auto">
+          <!-- Posts Content -->
+
+          <!--// Posts Content -->
+        </div>
+        <!-- Posts -->
+      </div>
+      <!--// Posts container -->
+    </div>
+    <!--// main content -->
+  </body>
+  <script>
+    // function getPosts() {
+    //   const req = new XMLHttpRequest();
+    //   req.open("GET", "https://jsonplaceholder.typicode.com/posts");
+    //   req.responseType = "json";
+    //   req.send();
+    //   req.onload = () => {
+    //     if (req.status >= 200 && req.status < 300) {
+    //       let posts = req.response;
+    //       for (post of posts) {
+    //         postContent = `
+    //         <div id="post">
+    //           <h3>${post.title}</h3>
+    //           <h4>${post.body}</h4>
+    //         </div>`;
+    //         document.getElementById("posts").innerHTML += postContent;
+    //       }
+    //     } else {
+    //       console.log("error");
+    //     }
+    //   };
+    // }
+
+    function getUsers() {
+      const req = new XMLHttpRequest();
+      req.open("GET", "https://jsonplaceholder.typicode.com/users");
+      req.responseType = "json";
+      req.send();
+      req.onload = () => {
+        if (req.status >= 200 && req.status < 300) {
+          document.getElementById("users").innerHTML = ""
+          let users = req.response;
+          for (user of users) {
+            userContent = `
+            <div id="user" onClick=userClicked(${user.id},this)>
+              <h3>${user.name}</h3>
+              <h4>${user.email}</h4>
+            </div>`;
+            document.getElementById("users").innerHTML += userContent;
+          }
+        } else {
+          console.log("error");
+        }
+      };
+    }
+
+    function getUserPosts(userId) {
+      const req = new XMLHttpRequest();
+      req.open("GET", `https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
+      req.responseType = "json";
+      req.send();
+      req.onload = () => {
+        if (req.status >= 200 && req.status < 300) {
+          let posts = req.response;
+          document.getElementById("posts").innerHTML = ""
+          for (post of posts) {
+            postContent = `
+            <div id="post">
+              <h3>${post.title}</h3>
+              <h4>${post.body}</h4>
+            </div>`;
+            document.getElementById("posts").innerHTML += postContent;
+          }
+        } else {
+          console.log("error");
+        }
+      };
+      
+    }
+    // getPosts();
+
+    function userClicked (userId , element) {
+      getUserPosts(userId)
+      let selected = document.getElementsByClassName("selected");
+      for (x of selected){
+        x.classList.remove('selected')
+      }
+      element.classList.add('selected')
+    }
+    getUsers();
+    
+  </script>
+</html>
